@@ -1,0 +1,87 @@
+[gd_scene format=3 uid="uid://blhjw438pe4tg"]
+
+[ext_resource type="Texture2D" uid="uid://dvgo4shuw3grc" path="res://Sprites/Fondo.png" id="1_lti8b"]
+[ext_resource type="Script" uid="uid://07i3ufjqspjs" path="res://Scripts/menu.gd" id="1_ouk20"]
+[ext_resource type="Script" uid="uid://cpockgiw4rcgl" path="res://fps.gd" id="3_mae5d"]
+
+[node name="Menu" type="Control" unique_id=2025053983]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ouk20")
+
+[node name="FPS" type="Label" parent="." unique_id=565150905]
+top_level = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.17
+anchor_top = 0.10300001
+anchor_right = 0.17
+anchor_bottom = 0.10300001
+offset_left = -142.84
+offset_top = -44.743996
+offset_right = 142.16
+offset_bottom = 44.256004
+text = "Hola mundo"
+script = ExtResource("3_mae5d")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1460380776]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.61518645, 0.9047501, 1)
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=294295111]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -657.0
+offset_top = -533.0
+offset_right = 1152.0
+offset_bottom = 542.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_lti8b")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1038477785]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.24000001
+anchor_top = 0.58400005
+anchor_right = 0.24000001
+anchor_bottom = 0.58400005
+offset_left = -255.48001
+offset_top = -239.43204
+offset_right = 254.51999
+offset_bottom = 239.56796
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 22
+
+[node name="JUGAR" type="Button" parent="VBoxContainer" unique_id=1962879646]
+layout_mode = 2
+theme_override_font_sizes/font_size = 100
+text = "JUGAR"
+
+[node name="OPCIONES" type="Button" parent="VBoxContainer" unique_id=1036407337]
+layout_mode = 2
+theme_override_font_sizes/font_size = 100
+text = "OPCIONES"
+
+[node name="SALIR" type="Button" parent="VBoxContainer" unique_id=2100767869]
+layout_mode = 2
+theme_override_font_sizes/font_size = 100
+text = "SALIR"
+
+[connection signal="pressed" from="VBoxContainer/JUGAR" to="." method="_on_jugar_pressed"]
+[connection signal="pressed" from="VBoxContainer/OPCIONES" to="." method="_on_opciones_pressed"]
+[connection signal="pressed" from="VBoxContainer/SALIR" to="." method="_on_salir_pressed"]
