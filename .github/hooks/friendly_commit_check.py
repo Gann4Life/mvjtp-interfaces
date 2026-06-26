@@ -48,17 +48,17 @@ CHECKS = {
         args=("--branch",),
         section="branch",
         key="allow_branch_types",
-        headline="branch name does not follow Conventional Branch",
-        syntax="<type>/<description>",
-        example="feature/skip-button",
+        headline="el nombre de la rama no coincide con las convenciones establecidas",
+        syntax="<tipo>/<descripcion>",
+        example="feature/nueva-habilidad",
     ),
     "message": Check(
         args=("--message",),
         section="commit",
         key="allow_commit_types",
-        headline="commit message does not follow Conventional Commits",
-        syntax="<type>(<scope>): <description>   (scope optional)",
-        example="feat(gameplay): add skip button",
+        headline="el mensaje del commit no coincide con las convenciones establecidas.",
+        syntax="<tipo>(<enfoque>): <descripcion>   (el enfoque es opcional)",
+        example="feat(gameplay): incorporar nueva habilidad",
     ),
 }
 
@@ -115,12 +115,12 @@ def run_commit_check(args: tuple[str, ...]) -> int:
 def report(check: Check, value: str) -> None:
     """Print one GUI-friendly, plain-text explanation of the failure."""
     print(dedent(f"""\
-        Commit rejected: {check.headline}.
-            received:       {value or "(none)"}
-            expected:       {check.syntax}
-            allowed types:  {allowed_types(check)}
-            example:        {check.example}
-            reference:      {CONTRIBUTING}
+        Commit rechazado: {check.headline}.
+            recibido:       {value or "(none)"}
+            esperado:       {check.syntax}
+            tipos permitidos:  {allowed_types(check)}
+            ejemplo:        {check.example}
+            referencia:      {CONTRIBUTING}
         """))
 
 
