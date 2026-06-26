@@ -1,0 +1,40 @@
+# Pre-commit hooks for Beatlords (PRY-2302v2)
+# Validates branch names (Conventional Branch) and commit messages
+# (Conventional Commits) locally, before code leaves your machine.
+#
+# These are thin local wrappers around `commit-check` (.github/hooks/
+# friendly_commit_check.py). commit-check does the real validation -- the same
+# tool and rules CI runs -- but its native output uses ANSI colors + an ASCII
+# banner that GUI clients (Fork, GitHub Desktop, ...) render as raw escape
+# codes. The wrapper hides that and prints a clean message listing the allowed
+# types, read straight from .github/commit-check.toml (the single source of
+# truth, also used by CI via .github/workflows/commit-check.yml).
+#
+# First-time setup (once per clone): run setup-git-hooks.bat, or manually:
+#   pip install pre-commit
+#   pre-commit install --hook-type pre-commit --hook-type commit-msg
+#
+# Updating commit-check: bump the pinned version in `additional_dependencies`
+# below (local hooks aren't touched by `pre-commit autoupdate`). Keep it in
+# sync with the commit-check-action major in the CI workflow.
+#
+# Docs: https://pre-commit.com  |  https://github.com/commit-check/commit-check
+
+repos:
+  - repo: local
+    hooks:
+      - id: check-branch
+        name: check branch name (Conventional Branch)
+        entry: python .github/hooks/friendly_commit_check.py branch
+        language: python
+        additional_dependencies: ["commit-check==2.9.0"]
+        stages: [pre-commit]
+        pass_filenames: false
+        always_run: true
+
+      - id: check-message
+        name: check commit message (Conventional Commits)
+        entry: python .github/hooks/friendly_commit_check.py message
+        language: python
+        additional_dependencies: ["commit-check==2.9.0"]
+        stages: [commit-msg]

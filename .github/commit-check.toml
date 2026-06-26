@@ -1,0 +1,20 @@
+# Enforces the conventions documented in .github/CONTRIBUTING.md.
+# Kept under .github/ to keep the repo root clean (GitHub convention).
+# Docs: https://commit-check.github.io/commit-check/configuration.html
+# Run locally with `commit-check`, or automatically on PRs via
+# .github/workflows/commit-check.yml.
+
+[commit]
+# Conventional Commits: type(scope): description  (scope optional, recommended).
+conventional_commits = true
+allow_commit_types = ["feat", "fix", "chore", "docs", "style", "refactor", "perf", "test", "build", "ci", "revert"]
+subject_capitalized = false   # descriptions are lowercase, e.g. "add skip button"
+subject_imperative = false    # don't enforce imperative-mood detection (avoids false positives)
+allow_merge_commits = true
+allow_revert_commits = true
+
+[branch]
+# Conventional Branch: <type>/<description>  (https://conventionalbranch.org)
+# main, master, HEAD and PR-* are always allowed.
+conventional_branch = true
+allow_branch_types = ["feature", "fix", "hotfix", "release", "chore", "feat", "bugfix", "ai", "claude"]
