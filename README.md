@@ -1,28 +1,10 @@
-# TP Final: Interfaces de Usuario (Motores de Juegos)
+# MVJ - Trabajo Práctico 1
 
-Este proyecto es el trabajo práctico para la materia de Motores de Videojuegos, enfocado en el diseño, desarrollo e implementación de **Interfaces de Usuario (UI)** utilizando el motor **Godot Engine**.
+Proyecto desarrollado en Godot Engine 4.6.2 con temática alineada al subsistema de Interfaces de Usuario.
+Nuestro objetivo principal es comprender como Godot administra la interfaz de usuario, y entender como los nodos que implementa deberían utilizarse.
 
-El objetivo principal es explorar el flujo de navegación entre pantallas, el manejo de menús, opciones, y la interacción del usuario dentro de un entorno de juego.
+[Enlace al documento](https://docs.google.com/document/d/1Q1QIh_sOSPfWHBeClF_9ECP8r6_L6KTHd9yFbnw8gvY/edit?usp=sharing)
 
-##  Características del Proyecto
-
-*   **Menú Principal (`menu.tscn`):** Pantalla de inicio con opciones para comenzar a jugar, configurar el juego o salir.
-*   **Menú de Opciones (`options.tscn`):** Panel para la configuración de parámetros del juego (audio, pantalla, etc.).
-*   **Escena de Juego Local (`juego.tscn`):** Estructura base para la transición entre la interfaz y el gameplay.
-
-##  Tecnologías Utilizadas
-
-*   **Motor:** Godot Engine (Versión 4.6.2)
-*   **Lenguaje:** GDScript
-*   **Control de Versiones:** Git + GitHub
-
-##  Estructura del Repositorio
-
-*   `/Scripts`: Contiene la lógica en GDScript para el comportamiento de los botones y transiciones.
-*   `/Sprites`: Assets visuales, texturas e íconos utilizados en los componentes de la UI.
-*   `project.godot`: Archivo de configuración central del proyecto.
-
-##  Integrantes
-
-*   **Gastón Bravo**
-*   **Santiago Mansilla**
+## Integrantes
+* **Gastón Bravo**
+* **Santiago Mansilla**
