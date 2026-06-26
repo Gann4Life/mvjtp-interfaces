@@ -1,0 +1,32 @@
+name: Commit Check
+
+# Validates branch names (Conventional Branch) and commit messages
+# (Conventional Commits) on every PR into main.
+# Rules live in .github/commit-check.toml.
+# See .github/CONTRIBUTING.md → "Branch naming" and "Commits".
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  commit-check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write   # lets the action post a summary comment on the PR
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0     # required so all commits in the PR are checked
+
+      - uses: commit-check/commit-check-action@v2
+        with:
+          message: true          # commit messages must be Conventional Commits
+          branch: true           # branch name must be Conventional Branch
+          job-summary: true
+          pr-comments: true      # friendly comment explaining any failure
