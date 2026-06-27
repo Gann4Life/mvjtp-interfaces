@@ -1,14 +1,22 @@
 [gd_scene format=3 uid="uid://bqs0tkkill772"]
 
-[ext_resource type="Texture2D" uid="uid://c8o0bjtw16t80" path="res://Air Hockey Flat Pack/PNG/Strikers/Blue.png" id="1_f8mk2"]
+[ext_resource type="Script" uid="uid://b0j0u337nr7ct" path="res://Scripts/puck.gd" id="1_2tfqw"]
+[ext_resource type="Texture2D" uid="uid://bwat0nihqhy25" path="res://Air Hockey Flat Pack/PNG/Strikers/Red.png" id="1_f8mk2"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2tfqw"]
 radius = 48.0
 
 [node name="Puck" type="RigidBody2D" unique_id=1177927250]
+input_pickable = true
+gravity_scale = 0.0
+script = ExtResource("1_2tfqw")
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=70152238]
 texture = ExtResource("1_f8mk2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1072092021]
 shape = SubResource("CircleShape2D_2tfqw")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
