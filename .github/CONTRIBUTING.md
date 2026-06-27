@@ -1,155 +1,125 @@
-This file is the **single source of truth for how the team works together**:
-branches, commits, pull requests and review. Code & architecture conventions
-live in [CLAUDE.md](../CLAUDE.md) — this file does not restate them.
+Este archivo es la **única fuente de verdad sobre cómo trabajamos en equipo**:
+ramas, commits, pull requests y revisión. Las convenciones de código van al
+final, en *"Reglas del código"*.
 
-> **Tooling:** A terminal is not required. Everything below is available in
+> **Herramientas:** no necesitás terminal. Todo lo de abajo se puede hacer desde
 > **GitHub Desktop**.
 
 ---
 
-## Branching model
+## Modelo de ramas
 
-We use a **single-trunk workflow**: `main` is the one permanent branch and is
-always releasable. Everything else is short-lived and branched off `main`.
+Trabajamos con un **tronco único** (single-trunk): `main` es la única rama
+permanente y siempre tiene que estar sana (que abra y corra en Godot). Todo lo
+demás dura poco y sale de `main`.
 
 ```
-⚙️ feature/* · fix/* · chore/* · hotfix/*  ──PR──▶  🏪 main  ──cut when releasing──▶  🚀 release/vX.Y  ──tag──▶  Steam
+⚙️ feature/* · fix/* · chore/*  ──PR──▶  🌳 main  ──tag al entregar──▶  🏷️ vX.Y.Z (entrega)
 ```
 
-| Branch | Meaning | Lifetime |
+| Rama | Qué es | Cuánto vive |
 |--------|---------|----------|
-| 🏪 **main** | The trunk. Always green, always releasable. **Protected** — no direct pushes. | Permanent |
-| ⚙️ **feature/\*** · **fix/\*** · **chore/\*** | Your working branch with one proposed change. | Days — deleted after merge |
-| 🚀 **release/vX.Y** | Cut from `main` when preparing a Steam release; stabilized (bug-fixes only), then tagged. | Only while a release is in flight |
-| 🔥 **hotfix/\*** | Emergency fix branched from a release tag after launch. | Until the patch ships |
+| 🌳 **main** | El tronco. Siempre verde y entregable. **Protegida por convención** — nada de push directo. | Permanente |
+| ⚙️ **feature/\*** · **fix/\*** · **chore/\*** | Tu rama de trabajo con un cambio propuesto. | Días — se borra al mergear |
+| 🚀 **release/\*** | Opcional, por si hace falta estabilizar antes de una entrega del TP. | Solo mientras se prepara la entrega |
 
-This replaces the old four-tier `feature → UNSTABLE → PREPROD → MAIN` model.
-There is no permanent integration or staging branch: integration happens on `main`
-behind branch protection, and staging happens on a temporary `release/vX.Y` branch.
+### Nombre de las ramas — [Conventional Branch](https://conventionalbranch.org/) (obligatorio)
 
-### Branch naming — [Conventional Branch](https://conventionalbranch.org/) (required)
+El formato es **`<tipo>/<descripcion>`**. `main` es el tronco y no lleva prefijo.
 
-Format is **`<type>/<description>`**. `main` is the trunk and takes no prefix.
-
-| Type | Use for |
+| Tipo | Para qué |
 |------|---------|
-| `feature/` | New features (e.g. `feature/skip-button`) |
-| `fix/` | Bug fixes (e.g. `fix/lead-in-time`) |
-| `hotfix/` | Urgent post-release fixes (e.g. `hotfix/leaderboard-crash`) |
-| `release/` | Release prep, version in the description (e.g. `release/v1.2.0`) |
-| `chore/` | Non-code work — docs, deps, tooling (e.g. `chore/update-localization`) |
+| `feature/` | Funcionalidades nuevas (ej. `feature/healthbar`) |
+| `fix/` | Arreglar bugs (ej. `fix/drag-del-puck`) |
+| `chore/` | Cosas que no son código — docs, dependencias, tooling (ej. `chore/actualizar-gitignore`) |
+| `release/` | Preparar una entrega, con la versión en la descripción (ej. `release/v0.2.0`) |
 
-**Rules** (per the spec):
+**Reglas** (según la spec):
 
-- Lowercase `a–z`, digits `0–9`, and hyphens only. **No** uppercase, underscores,
-  spaces, slashes beyond the prefix, or parentheses.
-- Dots are allowed **only** for the version number in `release/` (e.g. `release/v1.2.0`).
-- No consecutive, leading, or trailing hyphens/dots (e.g. `feature/new--login` ❌,
-  `feature/-new-login` ❌).
-- Optionally include the ticket: `feature/issue-123-skip-button`.
-- One goal per branch; delete it after merge. Never reuse a personal long-lived
-  branch — branch fresh off `main` each time.
+- Solo minúsculas `a–z`, dígitos `0–9` y guiones. **Nada** de mayúsculas,
+  guiones bajos, espacios, barras más allá del prefijo, ni paréntesis.
+- Los puntos van **solo** en el número de versión de `release/` (ej.
+  `release/v0.2.0`).
+- Sin guiones ni puntos repetidos, ni al principio ni al final (ej.
+  `feature/nueva--ui` ❌, `feature/-nueva-ui` ❌).
+- Si querés, sumá el número de issue: `feature/issue-12-healthbar`.
+- Un objetivo por rama, y la borrás después de mergear. No reutilices una rama
+  personal de larga vida — siempre arrancá fresco desde `main`.
 
-> **AI-generated branches.** Work created by AI coding agents uses the agent prefix
-> from the spec — e.g. `claude/...` (Claude Code), or the vendor-neutral `ai/...` —
-> so AI-authored PRs are easy to spot in review.
+> **Ramas hechas por IA.** Lo que genera un agente de IA usa el prefijo de
+> agente de la spec — ej. `claude/...` o el neutral `ai/...` — así se distinguen
+> de un vistazo en la revisión.
 
-> **Enforcement.** These names aren't just a guideline — CI validates them on every
-> PR with [`commit-check-action`](https://github.com/commit-check/commit-check-action)
-> (it checks both branch names and Conventional Commit messages), so a non-conforming
-> branch fails the check. Run [`commit-check`](https://github.com/commit-check/commit-check)
-> locally to catch issues before pushing.
+> **Cómo se controla.** Estos nombres no son solo una sugerencia: CI los valida
+> en cada PR con [`commit-check-action`](https://github.com/commit-check/commit-check-action)
+> (revisa el nombre de la rama y los mensajes de commit), así que una rama mal
+> nombrada hace fallar el check. Podés correr
+> [`commit-check`](https://github.com/commit-check/commit-check) localmente para
+> agarrar los errores antes de pushear.
 
-> **🚧 Migration (as of 2026-06).**
-> The repo still contains the legacy chaotic branches (`Feat-*`, `Fix--*`,
-> `UNSTABLE-6.1`, `Unstable6.1-/...`, …). They are being consolidated and deleted in
-> a single coordinated cleanup pass — see
-> [`docs/branch-cleanup-and-release-plan.md`](../docs/branch-cleanup-and-release-plan.md).
-> **Use the new convention for all new branches** and do not mass-rename on your own.
+## Pull requests, pruebas y merge
 
-## Pull requests, testing & merging
+- 🤖 **A dónde va el PR:** todo PR sale **de tu rama `feature/*` · `fix/*` ·
+  `chore/*` hacia `main`**. Como `main` está protegida, esta es la única forma de
+  que el trabajo entre.
+- 🧪 **No te quedes atrás:** cada tanto traé `main` *a* tu rama, así probás
+  contra lo último que se integró y resolvés conflictos temprano.
+- ✅ **Verde antes de mergear:** un PR entra cuando CI pasa (nombres de rama y de
+  commit válidos) y alguien lo revisó. Probá el cambio en el editor de Godot
+  antes de abrirlo. No mergees tu propio PR sin que lo revisen.
+- 🙅 **No** pushees a `main` directo ni te saltees la prueba en el editor.
+- 📲 **Pusheá** tu rama cuando quieras que te ayuden/revisen, o cuando esté listo.
 
-- 🤖 **PR target:** Open every PR **from your `feature/*` · `fix/*` · `chore/*` branch
-  into `main`**. `main` is protected, so this is the only way work gets in.
-- 🧪 **Stay current:** Merge `main` *into* your branch from time to time so you test
-  against the latest integrated work and resolve conflicts early.
-- ✅ **Green before merge:** A PR can only merge once CI passes (compile + tests) and
-  it has been reviewed. Don't merge your own unreviewed PR.
-- 🙅 **Don't** push to `main` directly or skip testing.
-- 📲 **Push** your branch when you want help/review, or when the change is done.
+### ¿A dónde pusheo? (la versión corta)
 
-### Where do I push? (the short version)
+> **En el día a día solo se pushean ramas `feature/*` · `fix/*` · `chore/*` y se
+> abren PR hacia `main`. A `main` nunca se le pushea directo.**
 
-> **Day-to-day devs only ever push `feature/*` · `fix/*` · `chore/*` branches, and
-> open PRs into `main`. You never push to `main`.** Releases, `release/*` branches
-> and tags are handled by the **release owner**.
+## Entregas y etiquetas (tags)
 
-## Releases, tags & Steam
+Versionamos con [Semantic Versioning](https://semver.org/): `MAJOR.MINOR.PATCH`.
+Para un trabajo práctico alcanza con algo simple:
 
-We version with [Semantic Versioning](https://semver.org/): `MAJOR.MINOR.PATCH`.
-
-- We are **pre-1.0** (`0.x`) until the public Steam launch, which becomes **`1.0.0`**.
-- **MAJOR** = big content drops / breaking save changes · **MINOR** = new
-  songs/levels/features · **PATCH** = bug fixes only.
-- Pre-release builds use suffixes: `1.0.0-alpha.1`, `1.0.0-beta.2`, `1.0.0-rc.1`.
-
-**Tags & GitHub Releases** (handled by the release owner):
-
-- Tag with an **annotated** tag prefixed `v` (e.g. `v0.9.0`). Keep the Unity
-  `PlayerSettings` version in sync with the tag, and put the tag in the Steam build
-  description so every store build traces back to exact code.
-- Cut a `release/vX.Y` branch from `main` to stabilize, tag it, then ship. Don't tag
-  ordinary `main` merges — tags are for builds we distribute to testers or players.
-
-**CI/CD triggers** (target setup — GameCI on GitHub Actions):
-
-| Git event | Pipeline |
-|-----------|----------|
-| Open / update a PR | Validate branch name + commit messages ([`commit-check-action`](https://github.com/commit-check/commit-check-action)), compile, run EditMode/PlayMode tests. Must be green to merge. |
-| Merge to `main` | Build a dev build → optional auto-upload to a password-gated Steam `qa`/`beta` branch. |
-| Push tag `vX.Y.Z-rc.n` | Build → Steam `prerelease` branch for final testing. |
-| Push tag `vX.Y.Z` | Build → Steam `default` (public). |
-
-**Steam branches** (Valve's "betas" — unrelated to git branches): a build is uploaded
-once (gets a Build ID) and assigned to a Steam branch. Use **password-gated** branches
-(`beta`, `qa`) for closed testing; promoting to public is setting the same Build ID
-live on `default` — no rebuild. The store page "Coming Soon → Released" toggle is a
-separate one-time Steamworks action: have `1.0.0` live on `default` first.
-
-**Hotfixes after launch:** branch `hotfix/*` from the release tag, fix, tag
-`vX.Y.(Z+1)`, ship to Steam `default`, then merge the fix back into `main`.
-
-Full detail and the migration runbook live in
-[`docs/branch-cleanup-and-release-plan.md`](../docs/branch-cleanup-and-release-plan.md).
+- Estamos **pre-1.0** (`0.x`) mientras el TP está en desarrollo.
+- **MINOR** = algo nuevo (una interfaz, un sistema) · **PATCH** = arreglos.
+- Marcá cada **entrega** con un tag **anotado** que empiece con `v` (ej.
+  `v0.1.0`). Así cada entrega queda atada al código exacto que mostramos.
+- Si una entrega necesita estabilizarse, podés cortar una rama `release/vX.Y`
+  desde `main`, arreglar solo bugs ahí y después poner el tag.
 
 ## Commits
 
-- 💬 **Messages:** Use [Conventional Commits](https://www.conventionalcommits.org/)
-  (`feat:`, `fix:`, `chore:`, …). Format: `type(scope): description`. Add `!` before
-  the colon for a breaking change (e.g. `feat(persistence)!: change save format`).
-- 🏷️ **Scope (recommended, not required):** name the system you touched, in
-  parentheses — e.g. `feat(gameplay): add skip button`, `fix(ui): correct lead-in`.
-  It keeps history skimmable by system. A plain `chore: bump dependencies` is still
-  valid when no single system fits. Suggested scopes (our `Scripts/` systems):
-  `gameplay`, `eventchannels`, `persistence`, `playerscoring`, `playersettings`,
-  `levelbrowser`, `loadingscreen`, `ui`, `gui`, `buttonprompt`, `singletontools`,
-  `utils`, `editor` — plus `localization`, `audio`, `steam`, `build` as needed.
-- 📖 **Describe the purpose** of the change, not just what files moved.
-- 🔨 **Amend** small follow-up fixes into the related commit — **but only before
-  you've pushed/shared the branch.** Once pushed, prefer a new commit to avoid
-  rewriting shared history.
-- ⬆️ Commit locally and avoid empty/no-purpose commits.
+- 💬 **Mensajes:** usá [Conventional Commits](https://www.conventionalcommits.org/)
+  (`feat:`, `fix:`, `chore:`, …). Formato: `tipo(enfoque): descripción`. Poné `!`
+  antes de los dos puntos si el cambio rompe compatibilidad (ej.
+  `feat(persistencia)!: cambiar formato de guardado`).
+- 🏷️ **Enfoque/scope (recomendado, no obligatorio):** nombrá entre paréntesis el
+  sistema que tocaste — ej. `feat(ui): agregar healthbar`,
+  `fix(input): corregir drag del puck`. Mantiene el historial fácil de leer por
+  sistema. Un `chore: actualizar dependencias` sirve igual cuando no aplica un
+  sistema puntual. Scopes sugeridos (nuestros sistemas en `Scripts/`): `ui`,
+  `gui`, `hud`, `menu`, `options`, `gameplay`, `input`, `physics`, `project` —
+  más `docs` y `build` cuando haga falta.
+- 📖 **Contá el porqué** del cambio, no solo qué archivos se movieron.
+- 🔨 **Amend** para arreglitos de seguimiento sobre el commit relacionado — **pero
+  solo antes de pushear/compartir la rama.** Una vez pusheado, mejor un commit
+  nuevo para no reescribir historia compartida.
+- ⬆️ Commiteá local y evitá commits vacíos o sin sentido.
 
-## Codebase rules
+## Reglas del código
 
-- 👲 **Language policy:**
-  - **Code** (identifiers, types, namespaces) → **English**. Always.
-  - **Prose** (docs, comments, XML docs, commit messages, PR descriptions) → **English**.
-  - One language per file; never mix within a file. All project docs
-    (README, this file, CLAUDE.md) are English.
-- 🧩 **Doc comments:** Document public APIs with **XML Documentation**. Avoid
-  line-by-line narration unless flagging something non-obvious to other devs.
-- 📊 **Self-documenting code:** Prefer descriptive names over comments.
-- 📝 **C# / Unity conventions:** Defined in [CLAUDE.md](../CLAUDE.md) →
-  *"Code conventions"*. Follow those; Rider's suggested style is aligned
-  with them.
+- 👲 **Idioma:**
+  - **Código** (identificadores, tipos, nombres de nodos) → **inglés**. Siempre.
+    Es la convención de GDScript y de la documentación de Godot.
+  - **Prosa** (docs, mensajes de commit, descripciones de PR) → **español**.
+  - Un idioma por archivo; no los mezcles. Los docs del proyecto (README, este
+    archivo) van en español.
+- 🧩 **Comentarios de doc:** documentá las APIs públicas con los comentarios de
+  documentación de GDScript (`##`). Evitá narrar línea por línea salvo para marcar
+  algo no obvio para el resto del equipo.
+- 📊 **Código que se explica solo:** mejor un nombre descriptivo que un comentario.
+- 📝 **Convenciones de GDScript:** seguí la
+  [guía de estilo oficial](https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_styleguide.html)
+  — `snake_case` para variables y funciones, `PascalCase` para clases y nodos,
+  `CONSTANT_CASE` para constantes. Usá type hints (`var hp: int = 100`) siempre
+  que puedas.
