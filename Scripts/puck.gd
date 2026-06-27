@@ -30,8 +30,7 @@ func release():
 	throw(calculate_impulse_direction(), calculate_impulse_force())
 
 func _process(delta: float) -> void:
-	if drag_success:
-		queue_redraw()
+	queue_redraw()
 
 func _on_mouse_entered() -> void:
 	mouse_over = true
@@ -53,4 +52,4 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _draw() -> void:
 	if drag_success:
-		draw_line(position, cursor_position(), Color.BLUE, 1)
+		draw_line(Vector2.ZERO, to_local(cursor_position()), Color.BLUE, 4)
