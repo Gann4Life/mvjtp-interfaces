@@ -1,7 +1,7 @@
-[gd_scene format=3 uid="uid://bcr1w5aevi5ip"]
+[gd_scene format=3 uid="uid://csp713x357x8i"]
 
-[ext_resource type="Texture2D" uid="uid://cqs0scvvnjqo0" path="res://Air Hockey Flat Pack/PNG/Tables/Blue.png" id="1_wbxth"]
-[ext_resource type="PackedScene" uid="uid://bqs0tkkill772" path="res://Prefabs/puck.tscn" id="2_m34ki"]
+[ext_resource type="Texture2D" uid="uid://cqs0scvvnjqo0" path="res://Assets/Air Hockey Flat Pack/PNG/Tables/Blue.png" id="1_wbxth"]
+[ext_resource type="PackedScene" uid="uid://hgarxria4v5g" path="res://Prefabs/puck.tscn" id="2_m34ki"]
 
 [node name="Gameplay" type="Node2D" unique_id=650682257]
 
