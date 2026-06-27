@@ -116,7 +116,7 @@ def report(check: Check, value: str) -> None:
     """Print one GUI-friendly, plain-text explanation of the failure."""
     print(dedent(f"""\
         Commit rechazado: {check.headline}.
-            recibido:       {value or "(none)"}
+            recibido:       {value or "(ninguno)"}
             esperado:       {check.syntax}
             tipos permitidos:  {allowed_types(check)}
             ejemplo:        {check.example}
@@ -128,7 +128,7 @@ def main(argv: list[str]) -> int:
     name = argv[1] if len(argv) > 1 else ""
     check = CHECKS.get(name)
     if check is None:
-        print(f"friendly_commit_check: unknown mode {name!r}", file=sys.stderr)
+        print(f"friendly_commit_check: modo desconocido {name!r}", file=sys.stderr)
         return 2
 
     message_file = argv[2] if len(argv) > 2 else ".git/COMMIT_EDITMSG"
@@ -139,8 +139,8 @@ def main(argv: list[str]) -> int:
         return 0
     if code == COMMIT_CHECK_MISSING:
         print(
-            "commit-check is unavailable in this hook environment; "
-            "re-run setup-git-hooks.bat to repair the hooks.",
+            "commit-check no está disponible en este entorno; "
+            "volvé a correr setup-git-hooks.bat para reparar los hooks.",
             file=sys.stderr,
         )
         return 1

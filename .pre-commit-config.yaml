@@ -1,4 +1,3 @@
-# Pre-commit hooks for Beatlords (PRY-2302v2)
 # Validates branch names (Conventional Branch) and commit messages
 # (Conventional Commits) locally, before code leaves your machine.
 #

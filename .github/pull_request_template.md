@@ -1,38 +1,37 @@
 <!--
-  PR template. See .github/CONTRIBUTING.md for the full workflow.
-  PRs target `main` — never push to `main` directly.
+  Plantilla de PR. El flujo completo está en .github/CONTRIBUTING.md.
+  Los PR van a `main` — a `main` nunca se le pushea directo.
 -->
 
-## What & why
+## Qué y por qué
 
-<!-- What does this PR change, and why? Link the issue/task if there is one. -->
+<!-- ¿Qué cambia este PR y por qué? Enlazá el issue/tarea si hay. -->
 
 
 
-## Type of change
+## Tipo de cambio
 
-<!-- Mark all that apply. -->
+<!-- Marcá lo que aplique. -->
 
-- [ ] ✨ Feature (`feat`)
-- [ ] 🐛 Fix (`fix`)
-- [ ] 🧹 Chore / refactor / docs (`chore`, `refactor`, `docs`)
+- [ ] ✨ Funcionalidad (`feat`)
+- [ ] 🐛 Arreglo (`fix`)
+- [ ] 🧹 Mantenimiento / refactor / docs (`chore`, `refactor`, `docs`)
 
 ## Checklist
 
-- [ ] Branch follows [Conventional Branch](https://conventionalbranch.org/) (`feature/`, `fix/`, `chore/`, `hotfix/`, `release/`)
-- [ ] PR targets **`main`** (not pushing to `main` directly)
-- [ ] Merged latest **`main`** into this branch and resolved conflicts
-- [ ] Tested in the Unity Editor — behaves as expected
-- [ ] Conventional Commit title (e.g. `feat: ...`, `fix: ...`)
-- [ ] No committed `.meta` hand-edits, no Store assets touched (see CLAUDE.md)
-- [ ] Prose is in English; code identifiers in English
+- [ ] La rama sigue [Conventional Branch](https://conventionalbranch.org/) (`feature/`, `fix/`, `chore/`, `release/`)
+- [ ] El PR apunta a **`main`** (sin push directo a `main`)
+- [ ] Traje el último **`main`** a esta rama y resolví los conflictos
+- [ ] Lo probé en el editor de Godot y se comporta como espero
+- [ ] Título con Conventional Commit (ej. `feat: ...`, `fix: ...`)
+- [ ] Prosa en español; identificadores de código en inglés
 
-## How to test
+## Cómo probarlo
 
-<!-- Steps a reviewer follows to verify this change (scene, level, inputs...). -->
-
+<!-- Pasos para que quien revisa verifique el cambio (escena, nodos, inputs...). -->
 
 
-## Notes for reviewers
 
-<!-- Anything non-obvious: trade-offs, follow-ups, known gaps. Optional. -->
+## Notas para quien revisa
+
+<!-- Algo no obvio: decisiones, pendientes, limitaciones. Opcional. -->
